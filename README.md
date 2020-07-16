@@ -2,6 +2,8 @@
 
 #### Project to evaluate my strength in code
 
+Demo: https://serzubkov.github.io/canvas-under-the-sends/dist/
+
 ## Setup
 1. <code>git clone https://github.com/SerZubkov/canvas-under-the-sends.git</code> clone and run <code>yarn</code> in project folder
 2. <code>npm run build:dev</code> or just <code>npm start</code> which also starts the dev mode
