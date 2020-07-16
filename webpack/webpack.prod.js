@@ -20,7 +20,7 @@ module.exports = {
     },
     output: {
         filename: '[name].[hash].js',
-        path: path.resolve(rootDir, 'build'),
+        path: path.resolve(rootDir, 'dist'),
         chunkFilename: '[name].[chunkhash].bundle.js',
         publicPath: './',
     },
@@ -56,7 +56,7 @@ module.exports = {
         ],
     },
     plugins: [
-        new WebpackCleanPlugin(['build']),
+        new WebpackCleanPlugin(['dist']),
         new MiniCssExtractPlugin({
             filename: 'src/css/[name].[contenthash:8].css',
             chunkFilename: 'src/css/[name].[contenthash:8].chunk.css',
