@@ -10,11 +10,29 @@
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
     "airbnb-typescript/base",
-    "plugin:prettier/recommended",
     "prettier/@typescript-eslint",
+    "plugin:prettier/recommended",
     "prettier"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
+  },
+  "overrides": [
+    {
+      "files": ["*.js"],
+      "env": {
+        "node": true
+      },
+      "parserOptions": {
+        "sourceType": "script"
+      },
+      "rules": {
+        "strict": ["error", "global"],
+        "@typescript-eslint/no-var-requires": "off"
+      }
+    }
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}]
   }
 } 

@@ -7,6 +7,7 @@ import {
     WIDTH_GAME,
     BLOCKS_TOP_Y,
 } from '../constant';
+import DefaultModel, { DefaultModelConstructor } from './Extends/DefaultModel';
 
 export type Item = {
     x: number;
@@ -16,7 +17,7 @@ export type Item = {
     active: boolean;
 };
 
-class Blocks {
+class Blocks extends DefaultModel {
     x = 0;
 
     y = 0;
@@ -31,7 +32,9 @@ class Blocks {
 
     height = BLOCK_HEIGHT;
 
-    constructor() {
+    constructor(options: DefaultModelConstructor) {
+        super(options);
+
         const blockWithMargin = this.width + BLOCKS_MARGIN;
         const blockHeightMargin = this.height + BLOCKS_MARGIN;
         for (let row = 0; row < this.row; row += 1) {
@@ -56,6 +59,14 @@ class Blocks {
 
     set updateBlocks(blocks: Item[]) {
         this.items = blocks;
+    }
+
+    render(): void {
+        this.items.forEach((element) => {
+            if (this.image && element.active) {
+                this.ctx?.drawImage(this.image, element.x, element.y);
+            }
+        });
     }
 }
 

@@ -1,7 +1,9 @@
-const prod_Path = '../dist';
-const src_Path = 'src';
+'use strict';
+
+const PROD_PATH = '../dist';
+const SRC_PATH = 'src';
 
 module.exports = {
-  prod_Path,
-  src_Path
-}
+    PROD_PATH,
+    SRC_PATH,
+};

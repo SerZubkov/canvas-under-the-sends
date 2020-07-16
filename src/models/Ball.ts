@@ -3,6 +3,7 @@ import intervalRandom from '../utils/intervalRandom';
 
 // eslint-disable-next-line import/no-cycle
 import Platform from './Platform';
+import DefaultModel from './Extends/DefaultModel';
 
 type Collide = {
     x: number;
@@ -11,7 +12,7 @@ type Collide = {
     height: number;
 };
 
-class Ball {
+class Ball extends DefaultModel {
     x = WIDTH_GAME / 2 - BALL_WIDTH / 2;
 
     y = HEIGHT_GAME - BALL_HEIGHT - PLATFORM_HEIGHT;
@@ -30,6 +31,10 @@ class Ball {
         if (velocity) {
             this.x += velocity;
         }
+    }
+
+    set setPositionX(x: number) {
+        this.x = x;
     }
 
     start(): void {
@@ -87,6 +92,12 @@ class Ball {
             this.dx = -this.dx;
         } else if (motionY + this.height > HEIGHT_GAME) {
             console.log('Game over!');
+        }
+    }
+
+    render(): void {
+        if (this.image) {
+            this.ctx?.drawImage(this.image, 0, 0, this.width, this.height, this.x, this.y, this.width, this.height);
         }
     }
 }
