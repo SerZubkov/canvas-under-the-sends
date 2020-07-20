@@ -15,6 +15,12 @@ module.exports = {
     },
     resolve: {
         extensions: ['.ts', '.js'],
+        alias: {
+            utils: path.resolve(rootDir, './src/utils'),
+            constant: path.resolve(rootDir, './src/constant'),
+            models: path.resolve(rootDir, './src/models'),
+            types: path.resolve(rootDir, './src/types'),
+        },
     },
     output: {
         path: path.resolve(__dirname, PROD_PATH),
