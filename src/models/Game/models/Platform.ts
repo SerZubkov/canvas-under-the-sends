@@ -1,12 +1,13 @@
-import { HEIGHT_GAME, WIDTH_GAME, PLATFORM_WIDTH, PLATFORM_HEIGHT, PLATFORM_VELOCITY } from '../constant';
+import { HEIGHT_GAME, WIDTH_GAME, PLATFORM_WIDTH, PLATFORM_HEIGHT, PLATFORM_VELOCITY } from 'constant';
 
 // eslint-disable-next-line import/no-cycle
 import Ball from './Ball';
-import DefaultModel, { DefaultModelConstructor } from './Extends/DefaultModel';
+import DefaultModel, { DefaultModelConstructor } from '../Extends/DefaultModel';
 
 type Constructor = DefaultModelConstructor & {
     ball: Ball;
 };
+
 class Platform extends DefaultModel {
     x = WIDTH_GAME / 2 - PLATFORM_WIDTH / 2;
 

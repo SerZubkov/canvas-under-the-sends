@@ -6,8 +6,8 @@ import {
     BLOCKS_MARGIN,
     WIDTH_GAME,
     BLOCKS_TOP_Y,
-} from '../constant';
-import DefaultModel, { DefaultModelConstructor } from './Extends/DefaultModel';
+} from 'constant';
+import DefaultModel, { DefaultModelConstructor } from '../Extends/DefaultModel';
 
 export type Item = {
     x: number;

@@ -8,7 +8,7 @@ export const BALL_WIDTH = 40;
 
 export const BALL_HEIGHT = 40;
 
-export const BALL_VELOCITY = 8;
+export const BALL_VELOCITY = 10;
 
 // Platform
 export const PLATFORM_WIDTH = 251;
@@ -26,7 +26,7 @@ export const BLOCKS_ROW = 5;
 
 export const BLOCKS_COLUMN = 7;
 
-export const BLOCKS_MARGIN = 14;
+export const BLOCKS_MARGIN = 6;
 
 export const BLOCKS_TOP_Y = 100;
 
