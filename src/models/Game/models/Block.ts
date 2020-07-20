@@ -34,12 +34,16 @@ class Blocks extends DefaultModel {
 
     constructor(options: DefaultModelConstructor) {
         super(options);
+        this.initial();
+    }
 
+    initial(): void {
         const blockWithMargin = this.width + BLOCKS_MARGIN;
         const blockHeightMargin = this.height + BLOCKS_MARGIN;
+        const arr = [];
         for (let row = 0; row < this.row; row += 1) {
             for (let column = 0; column < this.column; column += 1) {
-                this.items.push({
+                arr.push({
                     x: blockWithMargin * column + (WIDTH_GAME / 2 - (this.column / 2) * blockWithMargin),
                     y: blockHeightMargin * row + BLOCKS_TOP_Y,
                     width: this.width,
@@ -48,6 +52,11 @@ class Blocks extends DefaultModel {
                 });
             }
         }
+        this.items = arr;
+    }
+
+    reset(): void {
+        this.initial();
     }
 
     set deactivationBlock(index: number) {

@@ -1,4 +1,11 @@
-import { HEIGHT_GAME, WIDTH_GAME, PLATFORM_WIDTH, PLATFORM_HEIGHT, PLATFORM_VELOCITY } from 'constant';
+import {
+    HEIGHT_GAME,
+    WIDTH_GAME,
+    PLATFORM_WIDTH,
+    PLATFORM_HEIGHT,
+    PLATFORM_VELOCITY,
+    PLATFORM_MARGIN_BOTTOM,
+} from 'constant';
 
 // eslint-disable-next-line import/no-cycle
 import Ball from './Ball';
@@ -8,10 +15,13 @@ type Constructor = DefaultModelConstructor & {
     ball: Ball;
 };
 
-class Platform extends DefaultModel {
-    x = WIDTH_GAME / 2 - PLATFORM_WIDTH / 2;
+const initialX = WIDTH_GAME / 2 - PLATFORM_WIDTH / 2;
+const initialY = HEIGHT_GAME - PLATFORM_HEIGHT - PLATFORM_MARGIN_BOTTOM;
 
-    y = HEIGHT_GAME - PLATFORM_HEIGHT;
+class Platform extends DefaultModel {
+    x = initialX;
+
+    y = initialY;
 
     dx = 0;
 
@@ -27,6 +37,13 @@ class Platform extends DefaultModel {
         super(options);
 
         this.ball = options.ball;
+    }
+
+    reset(ball: Ball): void {
+        this.ball = ball;
+        this.x = initialX;
+        this.y = initialY;
+        this.dx = 0;
     }
 
     fire(): void {

@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
     const game = new Game({
         width: WIDTH_GAME,
         height: HEIGHT_GAME,
+        lives: 5,
     });
     game.start();
 });

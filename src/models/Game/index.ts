@@ -9,6 +9,7 @@ import Heart from './models/Heart';
 type ConstructorGame = {
     height: number;
     width: number;
+    lives: number;
 };
 
 class Game {
@@ -28,6 +29,8 @@ class Game {
 
     height = 0;
 
+    lives = 0;
+
     ball?: Ball;
 
     blocks?: Block;
@@ -36,9 +39,10 @@ class Game {
 
     heart?: Heart;
 
-    constructor({ height, width }: ConstructorGame) {
+    constructor({ height, width, lives }: ConstructorGame) {
         this.height = height;
         this.width = width;
+        this.lives = lives;
     }
 
     initCanvasSize(): void {
@@ -86,6 +90,14 @@ class Game {
             if (this.images.platform && this.ball) {
                 this.platform = new Platform({ ctx: this.ctx, image: this.images.platform, ball: this.ball });
             }
+            if (this.images.heart) {
+                this.heart = new Heart({
+                    ctx: this.ctx,
+                    image: this.images.heart,
+                    lives: this.lives,
+                    heightWindow: this.height,
+                });
+            }
         }
     }
 
@@ -120,14 +132,41 @@ class Game {
 
         this.collideBlock();
         this.collidePlatform();
-        this.ball?.collideWindowBounds();
+        this.ball?.collideWindowBounds(() => {
+            this.minusLife();
+        });
         this.platform?.collideWindowPlatform();
+    }
+
+    resetPositionControls(): void {
+        if (this.ball) {
+            this.platform?.reset(this.ball);
+        }
+        this.ball?.reset();
+    }
+
+    resetGame(): void {
+        this.resetPositionControls();
+        this.blocks?.reset();
+        this.heart?.reset({ heightWindow: this.height, lives: this.lives });
+    }
+
+    minusLife(): void {
+        if (this.heart) {
+            if (this.heart.heartsCount === 1) {
+                alert('GAME OVER!');
+                this.resetGame();
+            } else {
+                this.heart?.minusHear();
+                this.resetPositionControls();
+            }
+        }
     }
 
     collideBlock(): void {
         this.blocks?.items.forEach((element, i) => {
             const collide = this.ball?.collide(element);
-            if (collide && collide.x && collide.y) {
+            if (collide && collide.x !== undefined && collide.y !== undefined) {
                 if (element.active) {
                     this.ball?.bumbBlock(collide);
                 }
@@ -156,11 +195,12 @@ class Game {
     render(): void {
         this.ctx?.clearRect(0, 0, this.width, this.height);
         if (this.images.background) {
-            this.ctx?.drawImage(this.images.background, 0, 0);
+            this.ctx?.drawImage(this.images.background, 0, 0, this.width, this.height);
         }
         this.ball?.render();
         this.platform?.render();
         this.blocks?.render();
+        this.heart?.render();
     }
 
     start(): void {

@@ -1,5 +1,13 @@
 import intervalRandom from 'utils/intervalRandom';
-import { HEIGHT_GAME, WIDTH_GAME, BALL_HEIGHT, BALL_WIDTH, PLATFORM_HEIGHT, BALL_VELOCITY } from 'constant';
+import {
+    HEIGHT_GAME,
+    WIDTH_GAME,
+    BALL_HEIGHT,
+    BALL_WIDTH,
+    PLATFORM_HEIGHT,
+    BALL_VELOCITY,
+    PLATFORM_MARGIN_BOTTOM,
+} from 'constant';
 
 // eslint-disable-next-line import/no-cycle
 import Platform from './Platform';
@@ -23,10 +31,13 @@ const getNegativeNumber = (number: number): number => {
     return number < 0 ? number : number * -1;
 };
 
-class Ball extends DefaultModel {
-    x = WIDTH_GAME / 2 - BALL_WIDTH / 2;
+const initialX = WIDTH_GAME / 2 - BALL_WIDTH / 2;
+const initialY = HEIGHT_GAME - BALL_HEIGHT - PLATFORM_HEIGHT - PLATFORM_MARGIN_BOTTOM;
 
-    y = HEIGHT_GAME - BALL_HEIGHT - PLATFORM_HEIGHT;
+class Ball extends DefaultModel {
+    x = initialX;
+
+    y = initialY;
 
     dx = 0;
 
@@ -48,6 +59,13 @@ class Ball extends DefaultModel {
         this.x = x;
     }
 
+    reset(): void {
+        this.x = initialX;
+        this.y = initialY;
+        this.dx = 0;
+        this.dy = 0;
+    }
+
     start(): void {
         this.dy = -this.velocity;
         this.dx = intervalRandom(-this.velocity, this.velocity);
@@ -60,8 +78,6 @@ class Ball extends DefaultModel {
         if (this.dx) {
             this.x += this.dx;
         }
-
-        console.log('this.dx', this.dx);
     }
 
     collide(block: Collide): { x?: number; y?: number; touch: boolean } {
@@ -125,10 +141,10 @@ class Ball extends DefaultModel {
     }
 
     bumbBlock({ x, y }: { x?: number; y?: number }): void {
-        if (y) {
+        if (y !== undefined) {
             this.dy = y;
         }
-        if (x) {
+        if (x !== undefined) {
             this.dx = x;
         }
     }
@@ -141,7 +157,7 @@ class Ball extends DefaultModel {
         }
     }
 
-    collideWindowBounds(): void {
+    collideWindowBounds(cb: () => void): void {
         const motionX = this.x + this.dx;
         const motionY = this.y + this.dy;
 
@@ -155,7 +171,7 @@ class Ball extends DefaultModel {
             this.x = WIDTH_GAME - this.width;
             this.dx = -this.dx;
         } else if (motionY + this.height > HEIGHT_GAME) {
-            console.log('Game over!');
+            cb();
         }
     }
 
