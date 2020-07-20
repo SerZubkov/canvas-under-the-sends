@@ -1,7 +1,7 @@
-import Ball from '../models/Ball';
-import Blocks from '../models/Block';
-import Platform from '../models/Platform';
-import Heart from '../models/Heart';
+import Ball from 'models/Game/models/Ball';
+import Block from 'models/Game/models/Block';
+import Platform from 'models/Game/models/Platform';
+import Heart from 'models/Game/models/Heart';
 
 export type Images = {
     background: HTMLImageElement | null;
@@ -26,8 +26,8 @@ export type Game = {
     images: Images;
     ball?: Ball;
     platform?: Platform;
-    blocks?: Blocks;
-    heart: Heart;
+    blocks?: Block;
+    heart?: Heart;
     width: number;
     height: number;
 
